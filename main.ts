@@ -1,13 +1,20 @@
 input.onButtonPressed(Button.A, function () {
-    shake = 1
+    if (led_on == 1) {
+        led_on = 0
+    } else {
+        led_on = 1
+    }
 })
-let shake = 0
+let led_on = 0
 basic.showIcon(IconNames.Happy)
+led_on = 0
 basic.forever(function () {
     if (pins.digitalReadPin(DigitalPin.P2) == 1) {
-        shake = 1
-        while (shake) {
-            music.playTone(262, music.beat(BeatFraction.Whole))
-        }
+        led_on = 1
+    }
+    if (led_on == 1) {
+        pins.digitalWritePin(DigitalPin.P1, 1)
+    } else {
+        pins.digitalWritePin(DigitalPin.P1, 0)
     }
 })
